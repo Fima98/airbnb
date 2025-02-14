@@ -3,8 +3,11 @@
 import { cookies } from "next/headers";
 
 export async function handleLogin(userId: string, accessToken: string, refreshToken: string) {
+    if (!userId || !accessToken || !refreshToken) {
+        console.error({ error: "Invalid data" });
+    }
+    
     const cookie = await cookies();
-
 
     cookie.set('session_userid', userId, {
         httpOnly: true,

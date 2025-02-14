@@ -48,7 +48,7 @@ const SignUpModal = () => {
     const content = (
         <div className="">
             <h2 className="mb-6 text-2xl font-semibold">Welcome to Airdnd</h2>
-            <form className="space-y-4">
+            <form action={submitSignUp} className="space-y-4">
                 <input
                     onChange={(e) => setEmail(e.target.value)}
                     type="email"
@@ -81,7 +81,7 @@ const SignUpModal = () => {
 
                 <SubmitButton
                     label="Continue"
-                    onClick={submitSignUp}
+                    // onClick={submitSignUp}
                     className="w-full"
                 />
             </form>
