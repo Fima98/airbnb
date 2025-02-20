@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ContactButton from "@/app/components/ContactButton";
+import ContactButton from "@/app/components/forms/ContactButton";
 import Conversation from "@/app/components/inbox/Conversation";
 
 const InboxPage = () => {

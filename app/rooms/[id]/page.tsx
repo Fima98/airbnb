@@ -1,4 +1,4 @@
-import ReservationSidevar from "./ReservationSidevar";
+import ReservationSidevar from "../../components/properties/ReservationSidevar";
 import Image from "next/image";
 
 const RoomDetailPage = () => {

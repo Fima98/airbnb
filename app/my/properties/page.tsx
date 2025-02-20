@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ContactButton from "@/app/components/ContactButton";
+import ContactButton from "@/app/components/forms/ContactButton";
 import PropertyList from "@/app/components/properties/PropertyList";
 
 const MyPropertiesPage = () => {

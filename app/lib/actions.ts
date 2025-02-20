@@ -30,3 +30,20 @@ export async function handleLogin(userId: string, accessToken: string, refreshTo
         path: '/',
     });
 }
+
+
+export async function resetAuthCookies() {
+    const cookie = await cookies();
+    cookie.set('session_userid', '');
+    cookie.set('session_access_token', '');
+    cookie.set('session_refresh_token', '');
+}
+
+
+export async function getUserId() {
+    const cookie = await cookies();
+
+    const userId = cookie.get('session_userid')?.value
+
+    return userId ? userId : null;
+}
