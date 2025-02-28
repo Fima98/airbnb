@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-
-import Navbar from "./components/navbar/Navbar";
-import LoginModal from "./components/modals/LoginModal";
-import SignUpModal from "./components/modals/SignUpModal";
-import { Sign } from "crypto";
+import React from "react";
+import Navbar from "../components/navbar/Navbar";
+import LoginModal from "../components/modals/LoginModal";
+import SignUpModal from "../components/modals/SignUpModal";
+import AddPropertyModal from "@/components/modals/AddPropertyModal";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -28,7 +28,6 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const content = <h1 className="text-3xl font-semibold">Modal</h1>;
     return (
         <html lang="en">
             <body
@@ -39,6 +38,7 @@ export default function RootLayout({
 
                 <LoginModal />
                 <SignUpModal />
+                <AddPropertyModal />
 
                 {/* <Modal label="Title" content={content} isOpen={true}  /> */}
             </body>
