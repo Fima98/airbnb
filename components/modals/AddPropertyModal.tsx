@@ -6,8 +6,13 @@ import useAddPropertyModal from "@/hooks/useAddPropertyModal";
 import CustomButton from "@/components/forms/CustomButton";
 import Categories from "@/components/addpropery/Categories";
 import SelectCountry, { SelectCountryValue } from "../forms/SelectCountry";
+import Image from "next/image";
+import apiService from "@/services/apiService";
+import { useRouter } from "next/navigation";
 
 const AddPropertyModal = () => {
+    const router = useRouter();
+
     const [currentStep, setCurrentStep] = useState(1);
 
     const [dataCategory, setDataCategory] = useState("");
@@ -18,12 +23,56 @@ const AddPropertyModal = () => {
     const [dataBathrooms, setDataBathrooms] = useState("");
     const [dataGuests, setDataGuests] = useState("");
     const [dataCountry, setdataCountry] = useState<SelectCountryValue>();
+    const [dataImage, setDataImage] = useState<File | null>(null);
 
     const addPropertyModal = useAddPropertyModal();
 
     const handleCategorySelect = (category: string) => {
         setDataCategory(category);
         console.log("Category selected:", category);
+    };
+
+    const setImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const tmpImage = e.target.files[0];
+            setDataImage(tmpImage);
+        }
+    };
+
+    const submitForm = async () => {
+        if (
+            dataCategory &&
+            dataTitle &&
+            dataDescription &&
+            dataPrice &&
+            dataBedrooms &&
+            dataBathrooms &&
+            dataGuests &&
+            dataCountry &&
+            dataImage
+        ) {
+            const formData = new FormData();
+            formData.append("category", dataCategory);
+            formData.append("title", dataTitle);
+            formData.append("description", dataDescription);
+            formData.append("price_per_night", dataPrice);
+            formData.append("bedrooms", dataBedrooms);
+            formData.append("bathrooms", dataBathrooms);
+            formData.append("guests", dataGuests);
+            formData.append("country", dataCountry.label);
+            formData.append("country_code", dataCountry.value);
+            formData.append("image", dataImage);
+
+            const response = await apiService.post(
+                "/api/properties/create",
+                formData
+            );
+            if (response.ok) {
+                router.push("/");
+            } else {
+                console.log("Error:", response.data);
+            }
+        }
     };
 
     const content = (
@@ -178,7 +227,25 @@ const AddPropertyModal = () => {
                 <>
                     <h2 className="mb-6 text-2xl">Upload an image</h2>
                     <div className="pt-3 pb-6 space-y-4">
-                        <div className="flex flex-col space-y-2"></div>
+                        <div className="py-4 px- bg-gray-200 text-black rounded-xl">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={setImage}
+                            />
+                        </div>
+
+                        {dataImage && (
+                            <div className="w-[200px] h-[150px] relative">
+                                <Image
+                                    src={URL.createObjectURL(dataImage)}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    alt="Property image"
+                                    className="w-full h-full rounded-xl"
+                                />
+                            </div>
+                        )}
                     </div>
                     <CustomButton
                         label="Previous"
