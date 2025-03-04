@@ -64,7 +64,7 @@ const AddPropertyModal = () => {
             formData.append("image", dataImage);
 
             const response = await apiService.post(
-                "/api/properties/create",
+                "/api/properties/create/",
                 formData
             );
             if (response.ok) {
@@ -256,7 +256,7 @@ const AddPropertyModal = () => {
                     <CustomButton
                         label="Add property"
                         className="w-full"
-                        onClick={() => console.log("Submit")}
+                        onClick={submitForm}
                     />
                 </>
             )}
