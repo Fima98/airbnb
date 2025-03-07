@@ -14,6 +14,7 @@ const AddPropertyModal = () => {
     const router = useRouter();
 
     const [currentStep, setCurrentStep] = useState(1);
+    const [errors, setErrors] = useState<string[]>([]);
 
     const [dataCategory, setDataCategory] = useState("");
     const [dataTitle, setDataTitle] = useState("");
@@ -67,10 +68,19 @@ const AddPropertyModal = () => {
                 "/api/properties/create/",
                 formData
             );
-            if (response.ok) {
-                router.push("/");
+            if (response.status === "success") {
+                console.log(response);
+                addPropertyModal.close();
+                router.refresh();
             } else {
                 console.log("Error:", response.data);
+
+                const tmpErrors: string[] = Object.values(response).map(
+                    (error: any) => {
+                        return error;
+                    }
+                );
+                setErrors(tmpErrors);
             }
         }
     };
@@ -247,6 +257,16 @@ const AddPropertyModal = () => {
                             </div>
                         )}
                     </div>
+
+                    {errors.map((error, index) => {
+                        <div
+                            key={index}
+                            className="p-5 mb-4 bg-airbnb opacity-70 rounded-xl text-white"
+                        >
+                            {error}
+                        </div>;
+                    })}
+
                     <CustomButton
                         label="Previous"
                         className="w-full mb-2 bg-gray-200 hover:bg-gray-300 !text-black"

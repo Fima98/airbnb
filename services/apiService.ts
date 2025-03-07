@@ -7,7 +7,7 @@ const apiService = {
 
         const headers: HeadersInit = {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         };
 
         if (token) {
@@ -32,6 +32,11 @@ const apiService = {
         const headers: HeadersInit = {
             'Accept': 'application/json',
         };
+
+        if (!(data instanceof FormData)) {
+            headers['Content-Type'] = 'application/json';
+            data = JSON.stringify(data);
+        }
     
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
